@@ -2,11 +2,12 @@ from rest_framework import serializers
 from .models import Item
 class ItemSerializer(serializers.ModelSerializer):
     #imageId=serializers.SerializerMethodField()
-    imgUrl=serializers.CharField(source='imageId').SerializerMethodField()
+    imgUrl=serializers.CharField(source='imageId')
+    imgUrl=serializers.SerializerMethodField()
     class Meta:
         model = Item # 모델 설정
         fields = ('id','imgUrl','name','price','gender','category','ingredients','monthlySales','oilyRating','dryRating','sensitiveRating') # 필드 설정
-    def get_imageId(self, obj):
+    def get_imgUrl(self, obj):
         return "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/" + obj.imgUrl + ".jpg"
 
 class ItemDetailSerializer(serializers.ModelSerializer):
