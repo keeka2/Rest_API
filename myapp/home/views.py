@@ -84,11 +84,11 @@ def ProductList(request):
         serializer = ItemSerializer(query_set,many=True)
 
         #ImageID로 ImageUrl 생성
-        for i in serializer.data:
-            i['imageUrl'] = "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/" + i['imageId'] + ".jpg"
-            n=len(i['ingredients'])
-            i['ingredients'] = i['ingredients'][1:n-1]
-            del i['imageId']
+        # for i in serializer.data:
+        #     i['imageUrl'] = "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/" + i['imageId'] + ".jpg"
+        #     n=len(i['ingredients'])
+        #     i['ingredients'] = i['ingredients'][1:n-1]
+        #     del i['imageId']
         return JsonResponse(serializer.data, safe=False, json_dumps_params = {'ensure_ascii': False})
 
 @csrf_exempt
