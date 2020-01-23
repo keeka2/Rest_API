@@ -35,7 +35,8 @@ def ProductList(request):
             for temp_ingredient in ex_ingredient:
                 if Ingredient.objects.filter(name=temp_ingredient).exists() == False:
                     return JsonResponse({'message': 'ingredient ->' +temp_ingredient+ '<- Not Found'}, safe=False)
-                query_set = query_set.exclude(ingredients__contains=','+temp_ingredient+',')
+                temp_ingredient=','+temp_ingredient+','
+                query_set = query_set.exclude(ingredients__contains=temp_ingredient)
 
         #include_ingredient 검색 시 ingredient 테이블에 없는 성분일 시 에러
         if include_ingredient is not None:
@@ -43,7 +44,8 @@ def ProductList(request):
             for temp_ingredient in in_ingredient:
                 if Ingredient.objects.filter(name=temp_ingredient).exists() == False:
                     return JsonResponse({'message': 'ingredient ->' +temp_ingredient+ '<- Not Found'}, safe=False)
-                query_set = query_set.filter(ingredients__contains=','+temp_ingredient+',')
+                temp_ingredient = ',' + temp_ingredient + ','
+                query_set = query_set.filter(ingredients__contains=temp_ingredient)
 
         #skin_type 입력이 없으면 에러
         if skin_type is not None:
