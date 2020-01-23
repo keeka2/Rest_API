@@ -83,12 +83,7 @@ def ProductList(request):
 
         serializer = ItemSerializer(query_set,many=True)
 
-        #ImageID로 ImageUrl 생성
-        # for i in serializer.data:
-        #     i['imageUrl'] = "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/" + i['imageId'] + ".jpg"
-        #     n=len(i['ingredients'])
-        #     i['ingredients'] = i['ingredients'][1:n-1]
-        #     del i['imageId']
+
         return JsonResponse(serializer.data, safe=False, json_dumps_params = {'ensure_ascii': False})
 
 @csrf_exempt
@@ -100,8 +95,7 @@ def ProductDetail(request, pk):
     if request.method == 'GET':
         serializer = ItemDetailSerializer(obj)
         detail_Pk=serializer.data
-        detail_Pk['imageUrl']="https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/image/"+detail_Pk['imageId']+".jpg"
-        del detail_Pk['imageId']
+
 
         skin_type = request.GET.get('skin_type', None)
         query_set = Item.objects.all()
@@ -128,11 +122,6 @@ def ProductDetail(request, pk):
 
         serializer2 = ItemRecommendSerializer(query_set, many=True)
         All=serializer2.data
-        # ImageID로 ImageUrl 생성
-        for i in All:
-            i['imageUrl']= "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/"+i['imageId']+".jpg"
-            del i['imageId']
-
 
         #추천상품 리스트 앞에 pk검색 결과 붙이기
         All.insert(0,detail_Pk)
