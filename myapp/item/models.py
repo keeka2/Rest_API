@@ -21,6 +21,7 @@ class Item(models.Model):
         return self.id
 
 
+
 class Ingredient(models.Model):
     name = models.CharField(max_length=32)
     oily = models.CharField(max_length=1, default='p')
@@ -29,6 +30,7 @@ class Ingredient(models.Model):
 
     def __str__(self):
         return self.name
+
 
 def add_Rating_to_Item(sender, instance, *args, **kwargs):
     if instance.ingredients:
