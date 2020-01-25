@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import Item
 class ItemSerializer(serializers.ModelSerializer):
     imgUrl=serializers.SerializerMethodField('get_imageId')
+    ingredients=serializers.SerializerMethodField()
     class Meta:
         model = Item # 모델 설정
         fields = ('id','imgUrl','name','price','ingredients','monthlySales','oilyRating','dryRating','sensitiveRating') # 필드 설정
