@@ -66,8 +66,13 @@ def ProductList(request):
         # price가 string형태이기 때문에 int로 바꿔서 오름차순
         query_set = query_set.extra({'priceInt': "CAST(price as UNSIGNED)"}).order_by(skin_type, 'priceInt')
 
+        # 지금까지 검색한 결과가 없다면 오류
+        if query_set.count()==0:
+            return JsonResponse({'message': 'no matching result found'}, safe=False)
+
 
         #page번호가 주어지면 paginator를 사용하여 pagination을 함
+        #page번호가 정수가 아니거나 결과가 없으면 에러 출력
         if page is not None:
             paginator = Paginator(query_set, 50)
             try:
