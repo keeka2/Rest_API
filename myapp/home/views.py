@@ -90,7 +90,7 @@ def ProductList(request):
 
                 query_set=query_set[start:end]
             else:
-                return JsonResponse({'message': 'Page is between 1~'+max_page}, safe=False)
+                return JsonResponse({'message': 'Page is between 1~'+max_Page}, safe=False)
         # 검색 결과가 없을시 에러
         if query_set.count() == 0:
             return JsonResponse({'message': 'matching result Not Found'}, safe=False)
