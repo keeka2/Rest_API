@@ -75,7 +75,7 @@ def ProductList(request):
             except PageNotAnInteger:
                 return JsonResponse({'message': 'page not an integer'}, safe=False)
             except EmptyPage:
-                return JsonResponse({'message': 'page is between 1~'+paginator.num_pages}, safe=False)
+                return JsonResponse({'message': 'page is between 1~'+paginator.num_pages+''}, safe=False)
 
         serializer = ItemSerializer(query_set,many=True)
 
