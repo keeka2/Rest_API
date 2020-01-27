@@ -66,7 +66,7 @@ def add_Rating_to_Item(sender, instance, *args, **kwargs):
         # Item 테이블의 ingredients 앞 뒤에 ',' 추가하여 저장(추후에 검색할때 오류없이 나누기 위해)
         # 예시
         # 원래: "ingredients" : "ab,b,c,d,e" -> 'a' 성분 포함된 것 제거 시 'ab'에 'a'가 포함되어서 제거됨
-        # 수정: "ingredients" : ",ab,b,c,d,e," -> ',a,'로 검색하여 'ab' 제거 안됨
+        # 수정: "ingredients" : ",ab,b,c,d,e," -> 'a' 성분 포함된 것 제거 시 ',a,'로 검색하여 ',ab,' 제거 안됨
         instance.ingredients=','+instance.ingredients+','
 
 
