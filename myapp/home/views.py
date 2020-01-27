@@ -67,41 +67,15 @@ def ProductList(request):
         query_set = query_set.extra({'priceInt': "CAST(price as UNSIGNED)"}).order_by(skin_type, 'priceInt')
 
 
-        # #page 검색 시 데이터의 인덱스 구하기(page=1 이면 start=0, end=49)
-        # if page is not None:
-        #     # 지금까지 queryset 개수
-        #     total = query_set.count()
-        #
-        #     # 총 데이터 수로 가능한 최대 페이지 구하기(total=450이면 max_Page=9 / total=451이면 max_Page=10)
-        #     if total % 50 == 0:
-        #         max_Page = int(total / 50)
-        #     else:
-        #         max_Page = int(total / 50) + 1
-        #
-        #     #검색한 page가 max_page보다 크면 에러
-        #     if int(page)<=max_Page:
-        #         start=(int(page)-1)*50
-        #         end=(int(page)*50)
-        #
-        #         # 검색한 page가 10인데 데이터 총 수는 451
-        #         # 이런 경우는 start=450 & end=451
-        #         if end>total:
-        #             end=total
-        #
-        #         query_set=query_set[start:end]
-        #     else:
-        #         return JsonResponse({'message': 'Page is between 1~'+max_Page}, safe=False)
-        # # 검색 결과가 없을시 에러
-        # if query_set.count() == 0:
-        #     return JsonResponse({'message': 'matching result Not Found'}, safe=False)
+        #page번호가 주어지면 paginator를 사용하여 pagination을 함
         if page is not None:
             paginator = Paginator(query_set, 50)
             try:
                 query_set=paginator.page(page)
             except PageNotAnInteger:
-                query_set = paginator.page(1)
+                return JsonResponse({'message': 'page not an integer'}, safe=False)
             except EmptyPage:
-                query_set = paginator.page(paginator.num_pages)
+                return JsonResponse({'message': 'page is between 1~'+paginator.num_pages}, safe=False)
 
         serializer = ItemSerializer(query_set,many=True)
 
