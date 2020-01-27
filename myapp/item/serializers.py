@@ -8,7 +8,7 @@ class ItemSerializer(serializers.ModelSerializer):
     price=serializers.SerializerMethodField()
     class Meta:
         model = Item # 모델 설정
-        fields = ('id','imgUrl','name','price','ingredients','monthlySales','oilyRating','dryRating','sensitiveRating') # 필드 설정
+        fields = ('id','imgUrl','name','price','ingredients','monthlySales') # 필드 설정
 
     # imageId를 썸네일 imageUrl로 바꾸어 출력
     def get_imageId(self, obj):
@@ -30,7 +30,7 @@ class ItemDetailSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     class Meta:
         model = Item # 모델 설정
-        fields = ('id','imgUrl','name','price','gender','category','ingredients','monthlySales','oilyRating','dryRating','sensitiveRating') # 필드 설정
+        fields = ('id','imgUrl','name','price','gender','category','ingredients','monthlySales') # 필드 설정
 
     # imageId를 썸네일 imageUrl로 바꾸어 출력
     def get_imageId(self, obj):
@@ -50,7 +50,7 @@ class ItemRecommendSerializer(serializers.ModelSerializer):
     price = serializers.SerializerMethodField()
     class Meta:
         model = Item # 모델 설정
-        fields = ('id','imgUrl','name','price','category','oilyRating','dryRating','sensitiveRating') # 필드 설정
+        fields = ('id','imgUrl','name','price') # 필드 설정
     def get_imageId(self, obj):
         return "https://grepp-programmers-challenges.s3.ap-northeast-2.amazonaws.com/2020-birdview/thumbnail/" + obj.imageId + ".jpg"
 

@@ -94,6 +94,7 @@ def ProductDetail(request, pk):
     category=Item.objects.values_list('category',flat=True).get(pk=pk)
 
     if request.method == 'GET':
+        #상품 상세 정보를 detail_Pk에 저장
         serializer = ItemDetailSerializer(obj)
         detail_Pk=serializer.data
 
@@ -115,18 +116,18 @@ def ProductDetail(request, pk):
 
         #추천 리스트 결과에서는 이미 검색한 id(pk) 제외
         query_set = query_set.exclude(pk=pk)
+
+        #같은 category 분류
         if category:
             query_set = query_set.filter(category=category)
 
 
-        #검색한 결과에 대해 상위 3개만 저장
+        #검색한 결과에 대해 추천 상품 상위 3개만 All에 저장
         query_set = query_set.extra({'priceInt': "CAST(price as UNSIGNED)"}).order_by(skin_type,'priceInt')[:3]
-
-
         serializer2 = ItemRecommendSerializer(query_set, many=True)
         All=serializer2.data
 
-        #추천상품 리스트 앞에 pk검색 결과 붙이기
+        #추천상품 리스트 앞에 상품 상세 정보 붙이기
         All.insert(0,detail_Pk)
 
         return JsonResponse(All, safe=False, json_dumps_params = {'ensure_ascii': False})

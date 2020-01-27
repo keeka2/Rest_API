@@ -24,7 +24,7 @@ urlpatterns = [
     path(r'', views.index),
 # products 검색시
     path('products/', views.ProductList),
-# product Id로 검색시
+# product 상세 정보 검색시
     path('product/<int:pk>/', views.ProductDetail),
 
 ]
