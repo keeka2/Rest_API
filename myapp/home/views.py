@@ -18,7 +18,6 @@ def ProductList(request):
         query_set = Item.objects.all()
 
         skin_type = request.GET.get('skin_type', None)
-
         category = request.GET.get('category', None)
         page = request.GET.get('page', None)
         exclude_ingredient = request.GET.get('exclude_ingredient', None)
