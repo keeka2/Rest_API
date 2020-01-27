@@ -7,7 +7,6 @@ from myapp.item.serializers import ItemDetailSerializer
 from myapp.item.serializers import ItemRecommendSerializer
 from myapp.item.models import Item
 from myapp.item.models import Ingredient
-from django.db.models.functions import Length
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 def index(request):
