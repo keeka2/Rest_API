@@ -22,7 +22,7 @@ from myapp.home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', views.index),
-    path('product/', views.ProductList),
+    path('products/', views.ProductList),
     path('product/<int:pk>/', views.ProductDetail),
 
 ]
