@@ -32,6 +32,7 @@ def ProductList(request):
             else:
                 return JsonResponse({'message': 'Wrong skin_type Input'}, safe=False)
             # skin_type 변수가 검색한 skin_type에 따라서 '-oilyRating' or '-dryRating' or '-sensitiveRating'으로 바뀜
+            # -> 마지막에 검색한 skin_type 점수에 대한 내림차순으로 정렬할 때 사용
             skin_type = '-' + skin_type + 'Rating'
         else:
             return JsonResponse({'message': 'skin_type Not Found'}, safe=False)
@@ -81,11 +82,18 @@ def ProductList(request):
             if int(page)<=max_Page:
                 start=(int(page)-1)*50
                 end=(int(page)*50)
+
+                # 검색한 page가 10인데 데이터 총 수는 451
+                # 이런 경우는 start=450 & end=451
                 if end>total:
                     end=total
+
                 query_set=query_set[start:end]
             else:
                 return JsonResponse({'message': 'Page is between 1~'+max_page}, safe=False)
+        # 검색 결과가 없을시 에러
+        if query_set.count() == 0:
+            return JsonResponse({'message': 'matching result Not Found'}, safe=False)
 
         serializer = ItemSerializer(query_set,many=True)
 
@@ -118,7 +126,6 @@ def ProductDetail(request, pk):
         else:
             return JsonResponse({'message': 'skin_type Not Found'}, safe=False)
 
-        #위와 동일
         #추천 리스트 결과에서는 이미 검색한 id(pk) 제외
         query_set = query_set.exclude(pk=pk)
         if category:
