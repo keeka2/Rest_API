@@ -22,7 +22,9 @@ from myapp.home import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path(r'', views.index),
+# products 검색시
     path('products/', views.ProductList),
+# product Id로 검색시
     path('product/<int:pk>/', views.ProductDetail),
 
 ]
